@@ -18,7 +18,15 @@ const AddPostModal = (props) => {
     const formData = new FormData()
     formData.append('post', image)
 
-    const result = await addPostImage(formData)
+    const result = await fetch ('http://localhost:3001/api/posts',{
+      method: 'POST',
+      body: JSON.stringify(post),
+      headers: {
+        'Content-type': 'application/json',
+        }
+    })
+    
+    // addPostImage(formData)
 
     if(!result.error) {
       console.log('successfully updated profile picture')

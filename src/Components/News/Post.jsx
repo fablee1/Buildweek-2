@@ -11,6 +11,11 @@ const Post = (props) => {
     comments: Math.floor(Math.random() * 150),
     views: Math.floor(Math.random() * 15000),
   })
+  const likePost = async () => {
+      const result = await fetch ("http://localhost:3001/api/posts/" + props._id, {
+          method: 'POST'
+      })
+  }
 
   const deletePost = async () => {
     const result = await fetch("http://localhost:3001/api/posts/" + props._id, {
@@ -77,7 +82,7 @@ const Post = (props) => {
       )}
       <div className={styles.postFooterInfo}>
         <p>
-          {stats.reactions}
+        <span>{stats.reactions} likes</span>
           <span>{stats.comments} comments</span>
           <span>{stats.views} views</span>
         </p>

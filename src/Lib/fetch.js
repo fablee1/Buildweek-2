@@ -159,7 +159,11 @@ export const getPosts = async () => {
 //***************************/
 
 export const addPostImage = async (postId, image) => {
-    const result = await fetchData(newFetchPost(postId, 'POST', image, true))
+    const result = await fetch('http://localhost:3001/api/posts/' + postId, {
+        headers:{
+            method: 'POST'
+        }
+    })
     return result
 }
 
