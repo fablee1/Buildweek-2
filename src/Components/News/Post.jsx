@@ -79,7 +79,6 @@ const Post = (props) => {
       } else {
         console.log("Error with like the post")
       }
-      props.refresh()
     }
     getComments()
   }, [props])
