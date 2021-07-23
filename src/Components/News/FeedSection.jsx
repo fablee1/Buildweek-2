@@ -10,12 +10,13 @@ const FeedSection = (props) => {
   const [modal, setModal] = useState(false)
   const [sort, setSort] = useState("new")
 
-  const [query, setQuery] = useState("")
+  const [query, setQuery] = useState("?sort=-createdAt")
 
   const showModal = () => setModal(true)
   const hideModal = () => setModal(false)
 
-  const [posts, setPosts] = useState(null)
+  const [posts, setPosts] = useState([])
+  const [page, setPage] = useState(0)
 
   const [editPost, setEditPost] = useState(null)
 
@@ -26,14 +27,19 @@ const FeedSection = (props) => {
       if (prevSort !== sort) {
         if (sort === "new") {
           setQuery("?sort=-createdAt")
+          setPage(0)
         } else if (sort === "old") {
           setQuery("?sort=createdAt")
+          setPage(0)
         } else if (sort === "pic") {
           setQuery("?sort=-createdAt&image")
+          setPage(0)
         } else if (sort === "txt") {
           setQuery("?sort=-createdAt&!image")
+          setPage(0)
         } else if (sort === "my") {
           setQuery("?sort=-createdAt&user=" + localStorage.getItem("myId"))
+          setPage(0)
         }
       }
     }
@@ -49,19 +55,27 @@ const FeedSection = (props) => {
 
   useEffect(() => {
     const getAllPosts = async () => {
-      const result = await fetch(BACKEND_URL + "/posts" + query)
+      const result = await fetch(
+        BACKEND_URL + "/posts" + query + `&offset=${10 * page}&limit=10`
+      )
       if (result.ok) {
         const allData = await result.json()
-        setPosts(allData)
+        if (page === 0) {
+          setPosts(allData)
+        } else {
+          setPosts((p) => p.concat(allData))
+        }
       } else {
         console.log("Error with getting posts")
       }
     }
     getAllPosts()
-  }, [query])
+  }, [query, page])
 
   const getAllPosts = async () => {
-    const result = await fetch(BACKEND_URL + "/posts" + query)
+    const result = await fetch(
+      BACKEND_URL + "/posts" + query + `&offset=${10 * 0}&limit=10`
+    )
     if (result.ok) {
       const allData = await result.json()
       setPosts(allData)
@@ -189,6 +203,9 @@ const FeedSection = (props) => {
           showModal()
         }}
       />
+      <div>
+        <button onClick={() => setPage(page + 1)}>Load More</button>
+      </div>
     </>
   )
 }
@@ -198,7 +215,7 @@ export default FeedSection
 const Posts = (props) => {
   return (
     <>
-      {props.posts &&
+      {props.posts.length !== 0 &&
         props.posts.map((post) => (
           <Post
             key={post._id}

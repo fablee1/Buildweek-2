@@ -7,6 +7,7 @@ const LoginModal = (props) => {
   const [loggedIn, setLoggedIn] = useState(false)
   const [users, setUsers] = useState([])
   const [selectedUser, setSelectedUser] = useState(null)
+  const [register, setRegister] = useState(false)
 
   const getAllUsers = async () => {
     const response = await fetch(BACKEND_URL + "/profiles")
@@ -43,7 +44,7 @@ const LoginModal = (props) => {
           <strong>Please choose the user you want to be</strong>
         </div>
         <Form className="d-flex flex-column" onSubmit={(e) => submitForm(e)}>
-          <select onChange={(e) => selectUser(e.target.value)}>
+          <select onChange={(e) => selectUser(e.target.value)} className="py-2">
             <option>Choose User</option>
             {users.length !== 0 &&
               users.map((u) => (
@@ -52,10 +53,21 @@ const LoginModal = (props) => {
                 </option>
               ))}
           </select>
-          <Button variant="primary" type="submit" className="ml-auto">
+          <Button variant="primary" type="submit" className="w-100 mt-2">
             Log In
           </Button>
+          <div className="text-center my-3">OR CLICK REGISTER</div>
+          <Button
+            variant="primary"
+            onClick={() => {
+              setRegister(true)
+              props.close()
+            }}
+            className="w-100 mt-2">
+            Register
+          </Button>
           {loggedIn && <Redirect to="/me" />}
+          {register && <Redirect to="/register" />}
         </Form>
       </Modal.Body>
     </Modal>
