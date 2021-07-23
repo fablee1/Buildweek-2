@@ -4,6 +4,7 @@ import ProfileCardInfo from "./ProfileCardInfo"
 import { useState } from "react"
 import ProfileModalImg from "./ProfileModalImg"
 import ProfileModal from "../Modals/ProfileModal/ProfileModal"
+import { BACKEND_URL } from "../../env.js"
 
 const ProfileCard = (props) => {
   return (
@@ -146,9 +147,7 @@ const Avatar = (props) => {
         </div>
       </div>
       <div className="ml-auto mr-4 d-flex justify-content-center align-items-center">
-        <a href={`http://localhost:3001/api/profiles/${props.profile._id}/cv`}>
-          Download CV
-        </a>
+        <a href={`${BACKEND_URL}/profiles/${props.profile._id}/cv`}>Download CV</a>
       </div>
       <div className={styles.edit}>
         {!props.public && (

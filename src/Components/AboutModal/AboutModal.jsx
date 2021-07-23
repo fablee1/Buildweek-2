@@ -1,5 +1,6 @@
 import { Modal, Form } from "react-bootstrap"
 import { useState } from "react"
+import { BACKEND_URL } from "../../env.js"
 
 const AboutModal = (props) => {
   const [profData, setProfData] = useState({
@@ -20,7 +21,7 @@ const AboutModal = (props) => {
   const putAbout = async (e) => {
     e.preventDefault()
     const response = await fetch(
-      "http://localhost:3001/api/profiles/" + localStorage.getItem("myId"),
+      BACKEND_URL + "/profiles/" + localStorage.getItem("myId"),
       {
         headers: {
           "Content-Type": "application/json",
