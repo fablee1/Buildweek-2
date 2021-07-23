@@ -71,8 +71,18 @@ const Post = (props) => {
   }
 
   useEffect(() => {
+    const getComments = async () => {
+      const result = await fetch(BACKEND_URL + "/posts/" + props._id + "/comment")
+      if (result.ok) {
+        const data = await result.json()
+        setComments(data)
+      } else {
+        console.log("Error with like the post")
+      }
+      props.refresh()
+    }
     getComments()
-  }, [])
+  }, [props])
 
   const showComms = () => {
     setShowComments(!showComments)
