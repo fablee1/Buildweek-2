@@ -6,7 +6,7 @@ import SkillsEndorsements from "./infoCards/SkillsEndorsements.jsx"
 import Experience from "./infoCards/Experience.jsx"
 import About from "./infoCards/About.jsx"
 import SidePeopleBar from "./infoCards/SidePeopleBar/SidePeopleBar.jsx"
-import DashBoard from "./DashBoard/DashBoard.jsx"
+// import DashBoard from "./DashBoard/DashBoard.jsx"
 
 function Profile(props) {
   return (
@@ -23,7 +23,7 @@ function Profile(props) {
               refresh={props.refresh}
             />
           )}
-          <DashBoard />
+          {/* <DashBoard /> */}
           {props.myProfile && (
             <About
               bio={props.myProfile.bio}
