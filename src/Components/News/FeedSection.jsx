@@ -3,7 +3,7 @@ import { Row, Col, Form } from "react-bootstrap"
 import CardBoilerplate from "../infoCards/Common/CardBoilerplate"
 import Post from "./Post"
 import { BACKEND_URL } from "../../env.js"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import AddPostModal from "./AddPostModal"
 
 const FeedSection = (props) => {
@@ -19,18 +19,23 @@ const FeedSection = (props) => {
 
   const [editPost, setEditPost] = useState(null)
 
+  const prevSortRef = useRef()
+
   useEffect(() => {
     if (posts !== null) {
-      if (sort === "new") {
-        setQuery("?sort=-createdAt")
-      } else if (sort === "old") {
-        setQuery("?sort=createdAt")
-      } else if (sort === "pic") {
-        setQuery("?sort=-createdAt&image")
-      } else if (sort === "txt") {
-        setQuery("?sort=-createdAt&!image")
-      } else if (sort === "my") {
-        setQuery("?sort=-createdAt&user=" + localStorage.getItem("myId"))
+      if (prevSortRef.current !== sort) {
+        if (sort === "new") {
+          setQuery("?sort=-createdAt")
+        } else if (sort === "old") {
+          setQuery("?sort=createdAt")
+        } else if (sort === "pic") {
+          setQuery("?sort=-createdAt&image")
+        } else if (sort === "txt") {
+          setQuery("?sort=-createdAt&!image")
+        } else if (sort === "my") {
+          setQuery("?sort=-createdAt&user=" + localStorage.getItem("myId"))
+        }
+        prevSortRef.current = sort
       }
     }
   }, [posts, sort])
