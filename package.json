@@ -1,6 +1,5 @@
 {
-  "homepage": "http://pinacotheque.github.io/Buildweek-2",
-  "name": "buldweek-2",
+  "name": "bw3",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
