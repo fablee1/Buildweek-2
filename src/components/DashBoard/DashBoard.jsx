@@ -1,7 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap"
 import "./DashBoard.css"
 
-const Dashboard = () => {
+const DashBoard = () => {
   return (
     <Container className="card mt-3">
       <Row>
@@ -131,4 +131,4 @@ const Dashboard = () => {
   )
 }
 
-export default Dashboard
+export default DashBoard
