@@ -8,7 +8,7 @@ const SidePeopleBar = (props) => {
 
   useEffect(() => {
     fetchPeople()
-  }, [props.refresh])
+  }, [])
 
   useEffect(() => {
     const cardLimits = [4, 10]
