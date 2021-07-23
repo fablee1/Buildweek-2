@@ -19,11 +19,11 @@ const FeedSection = (props) => {
 
   const [editPost, setEditPost] = useState(null)
 
-  const prevSortRef = useRef()
+  const prevSort = usePrevious(sort)
 
   useEffect(() => {
     if (posts !== null) {
-      if (prevSortRef.current !== sort) {
+      if (prevSort !== sort) {
         if (sort === "new") {
           setQuery("?sort=-createdAt")
         } else if (sort === "old") {
@@ -35,10 +35,17 @@ const FeedSection = (props) => {
         } else if (sort === "my") {
           setQuery("?sort=-createdAt&user=" + localStorage.getItem("myId"))
         }
-        prevSortRef.current = sort
       }
     }
-  }, [posts, sort])
+  }, [posts, sort, prevSort])
+
+  function usePrevious(value) {
+    const ref = useRef()
+    useEffect(() => {
+      ref.current = value
+    }, [value])
+    return ref.current
+  }
 
   useEffect(() => {
     const getAllPosts = async () => {
